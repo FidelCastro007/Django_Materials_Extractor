@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: ml-model
+Version: 0.0.1
+Summary: Utility for making hyperparameter tuning easier
+Author-email: Author name here <opensourcecoder11@gmail.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+
+Sample README file for ml_model package.  This package provides a simple class
+to perform hyperparameter tuning on a generic machine learning model.  The user
+can input the specifications, including the hyperparameters to use in a search grid,
+as well as the specific machine learning model desired.

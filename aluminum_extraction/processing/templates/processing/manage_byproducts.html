@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage By-Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>By-Products</h1>
+    <a href="{% url 'homepage' %}" style="text-decoration: none; color: #007BFF;">&larr; Back to Home</a>
+    <ul>
+        {% if by_products %}
+            {% for by_product in by_products %}
+                <li>
+                    <strong>{{ by_product.name }}</strong> 
+                    (Quantity: {{ by_product.quantity }})
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No by-products available for this processing.</p>
+        {% endif %}
+    </ul>
+</body>
+</html>

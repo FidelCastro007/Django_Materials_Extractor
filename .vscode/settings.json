@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./ml_model",
+        "./aluminum_extraction/ml_model"
+    ]
+}
