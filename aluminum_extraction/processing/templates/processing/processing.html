@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Details</title>
+    {% load static %}
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Processing Details</h1>
+        <div class="processing-info">
+            <strong>Raw Material:</strong> {{ processing.raw_material.name }}
+        </div>
+        <div class="processing-info">
+            <strong>Quantity:</strong> {{ processing.raw_material.quantity }} kg
+        </div>
+        <div class="processing-info">
+            <strong>Quality:</strong> {{ processing.raw_material.quality }}
+        </div>
+        <div class="processing-info">
+            <strong>Estimated Aluminum Output:</strong> {{ processing.aluminum_output_estimate }} kg
+        </div>
+        <div class="processing-info">
+            <strong>Status:</strong> {{ processing.status }}
+        </div>
+
+        <a href="{% url 'manage_byproducts' processing.id %}">Manage By-Products</a>
+
+        <div class="back-link">
+            <a href="{% url 'homepage' %}">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="{% static 'script/script.js' %}"></script>
+</body>
+</html>

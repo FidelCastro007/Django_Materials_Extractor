@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Processing</title>
+    <title>Processing Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             background-color: #f4f4f9;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
         p {
@@ -29,6 +26,23 @@
             margin: 10px 0;
             width: fit-content;
         }
+        p.error {
+            color: red;
+            background-color: #ffe6e6;
+            border-color: #ffcccc;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
         a {
             text-decoration: none;
             color: white;
@@ -36,6 +50,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s;
+            margin-top: 15px;
         }
         a:hover {
             background-color: #0056b3;
@@ -43,10 +58,29 @@
     </style>
 </head>
 <body>
-    <h1>Processing Started</h1>
+    <h1>Processing Details</h1>
     <p><strong>Raw Material:</strong> {{ processing.raw_material.name }}</p>
-    <p><strong>Estimated Aluminum Output:</strong> {{ processing.aluminum_output_estimate }} kg</p>
-    <p><strong>Status:</strong> {{ processing.status }}</p>
-    <a href="{% url 'manage_byproducts' processing.id %}">Manage By-Products</a>
+    <p><strong>Status:</strong> <strong>{{ processing.status }}</strong></p>
+
+    {% if status == "Completed" %}
+        <p><strong>Estimated Aluminum Output:</strong> {{ final_output_estimate|default:"N/A" }} kg</p>
+    {% elif status == "Failed" %}
+        <p class="error">Processing failed. Please try again or contact support.</p>
+    {% else %}
+        <p>Processing in progress. Please wait...</p>
+    {% endif %}
+
+    <h2>By-Products</h2>
+    {% if by_products %}
+        <ul>
+            {% for by_product in by_products %}
+                <li>{{ by_product.name }}: {{ by_product.quantity }} kg</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No by-products available for this processing.</p>
+    {% endif %}
+
+    <a href="{% url 'get_processing_data' processing.id %}">View Processing Data</a>
 </body>
 </html>

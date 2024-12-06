@@ -29,7 +29,14 @@ ALLOWED_HOSTS = []
 
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = '/processing/'  # or wherever you want to redirect after login
+LOGIN_REDIRECT_URL = '/'  # or wherever you want to redirect after login
+
+# If you're using custom static file locations, you can specify:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # This will make sure that files in the 'static' folder are served
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # This is where the static files will be collected in production
 
 
 
@@ -131,7 +138,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
