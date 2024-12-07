@@ -31,6 +31,8 @@ LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = '/'  # or wherever you want to redirect after login
 
+LOGOUT_REDIRECT_URL = '/'  # Redirect to homepage or any other page after logout
+
 # If you're using custom static file locations, you can specify:
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # This will make sure that files in the 'static' folder are served
@@ -144,3 +146,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Automatically log out users after browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 3600  # 1 hour session time
+
