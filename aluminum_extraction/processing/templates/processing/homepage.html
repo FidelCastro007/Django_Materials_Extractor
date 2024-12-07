@@ -55,6 +55,12 @@
                 </li>
             {% endfor %}
         </ul>
-    </div>    
+    </div>
+
+    <!-- Conditionally render logout button if user is authenticated -->
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary btn-sm" href="?logout=true">Logout</a>
+    {% endif %}
+
 </body>
 </html>
