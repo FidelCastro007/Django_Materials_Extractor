@@ -11,13 +11,46 @@ from django.db import IntegrityError
 import logging
 # Start processing view with both ML and RL integration
 from django.db import transaction
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
 
-# Home page view
 def homepage(request):
+    # Check if the user is authenticated and handle logout
+    if request.user.is_authenticated:
+        if 'logout' in request.GET:
+            logout(request)
+            return redirect('login')  # Redirect to the login page after logout
+    
     raw_materials = RawMaterial.objects.all()
     if not raw_materials:
         raise Http404("No raw materials found.")
+    
     return render(request, 'processing/homepage.html', {'raw_materials': raw_materials})
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('homepage')  # If the user is already logged in, redirect to homepage
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('homepage')
+            else:
+                return render(request, 'processing/login.html', {'form': form, 'error': 'Invalid username or password.'})
+        else:
+            return render(request, 'processing/login.html', {'form': form, 'error': 'Please correct the errors below.'})
+    else:
+        form = AuthenticationForm()
+    return render(request, 'processing/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)  # This will log out the user and clear the session
+    return redirect('login')  # Redirect to login page
 
 def register(request):
     if request.method == 'POST':
@@ -54,18 +87,18 @@ def register(request):
 
     return render(request, 'processing/register.html')
 
-def calculate_byproducts(processing_record):
+def calculate_byproducts(self):
+    print(f"self is of type: {type(self)}")
     by_products = []
-    if processing_record.raw_material.name == "Bauxite Ore":
-        by_products = [
-            {"name": "Iron Residue", "quantity": 50.0},
-            {"name": "Silica Residue", "quantity": 20.0}
-        ]
-    elif processing_record.raw_material.name == "Aluminum Ore":
-        by_products = [
-            {"name": "Aluminum Slag", "quantity": 10.0}
-        ]
+    if isinstance(self, Processing):
+        raw_material_name = self.raw_material.name.strip().lower()
+        if raw_material_name == "silica mixture":
+            by_products.append({'name': 'Silica Residue', 'quantity': 20.0, 'processing': self})
+    else:
+        print("Error: self is not a Processing instance.")
     return by_products
+
+
 
 @login_required
 def start_processing(request, raw_material_id):
