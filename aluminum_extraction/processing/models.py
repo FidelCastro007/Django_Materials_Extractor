@@ -32,12 +32,23 @@ class Processing(models.Model):
         # Add more conditions if needed for other raw materials
         return by_products
 
+    # def determine_status(self):
+    #     # Example thresholds
+    #     if self.raw_material.quantity < 10 or self.raw_material.quality < 50:
+    #         self.status = 'Failed'
+    #     elif self.raw_material.quantity >= 10 and self.raw_material.quality >= 50:
+    #         self.status = 'Completed'
+    #     else:
+    #         self.status = 'Pending'
+    #     self.save()
+
     def __str__(self):
         return f"Processing {self.raw_material.name} - {self.status}"
 
 class ByProduct(models.Model):
     name = models.CharField(max_length=255, default='Unknown')
     quantity = models.FloatField()
+    quality = models.CharField(max_length=10, default='Medium')  # Add this line for default value
     processing = models.ForeignKey(Processing, related_name='by_products', on_delete=models.CASCADE)
 
     def __str__(self):
