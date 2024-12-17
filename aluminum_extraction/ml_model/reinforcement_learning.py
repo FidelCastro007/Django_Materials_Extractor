@@ -1,16 +1,10 @@
-# ml_model/reinforcement_learning.py
 import numpy as np
 
-# A placeholder function to simulate a reinforcement learning environment
 def reinforcement_learning_simulation():
-    # Simulate the feedback loop for learning
-    # Here, we're simply returning a constant, but this can be expanded with RL logic
-    
-    # Simulated feedback
-    feedback = np.random.random()  # Example random feedback
-    learning_rate = 0.1
+    # Simulate a more realistic adjustment
+    feedback = np.random.uniform(0.8, 1.2)  # Feedback varies between 0.8x and 1.2x
+    learning_rate = 0.2
     optimal_output = 100  # Ideal aluminum output
 
-    adjusted_output = optimal_output + (feedback * learning_rate)
-    
-    return adjusted_output
+    adjusted_output = optimal_output * feedback * learning_rate
+    return adjusted_output  # Returns a multiplier or an adjustment factor
