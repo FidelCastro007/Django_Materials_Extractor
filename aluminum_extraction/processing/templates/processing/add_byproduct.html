@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Byproduct</title>
+    <style>
+        /* Same styling as before */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        input, select, .quality-radio-group {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .quality-radio-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h1>Add Byproduct</h1>
+
+        <!-- Display Errors -->
+        {% if form.errors %}
+            <div class="error">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Byproduct Name -->
+        <input type="text" name="name" placeholder="Byproduct Name" value="{{ form.name.value }}" required>
+
+        <!-- Byproduct Quantity -->
+        <input type="number" name="quantity" placeholder="Quantity" value="{{ form.quantity.value }}" required>
+
+        <!-- Processing -->
+        <select name="processing" required>
+            <option value="">Select Processing</option>
+            {% for processing in form.processing.field.queryset %}
+                <option value="{{ processing.id }}" {% if form.processing.value == processing.id %}selected{% endif %}>
+                    {{ processing }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Byproduct Quality (Radio Buttons) -->
+        <div class="quality-radio-group">
+            <label>
+                <input type="radio" name="quality" value="High" {% if form.quality.value == 'High' %}checked{% endif %}>
+                High
+            </label>
+            <label>
+                <input type="radio" name="quality" value="Medium" {% if form.quality.value == 'Medium' %}checked{% endif %}>
+                Medium
+            </label>
+            <label>
+                <input type="radio" name="quality" value="Low" {% if form.quality.value == 'Low' %}checked{% endif %}>
+                Low
+            </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Byproduct</button>
+    </form>
+</body>
+</html>
