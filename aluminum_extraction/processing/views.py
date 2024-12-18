@@ -25,10 +25,11 @@ def homepage(request):
             return redirect('login')  # Redirect to the login page after logout
     
     raw_materials = RawMaterial.objects.all()
-    if not raw_materials:
-        raise Http404("No raw materials found.")
+    # if not raw_materials:
+    #     raise Http404("No raw materials found.")
+    message = None if raw_materials.exists() else 'No raw-materials available for this processing.'
     
-    return render(request, 'processing/homepage.html', {'raw_materials': raw_materials})
+    return render(request, 'processing/homepage.html', {'raw_materials': raw_materials, 'message': message,})
 
 
 def login_view(request):
