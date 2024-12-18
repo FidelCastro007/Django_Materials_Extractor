@@ -56,23 +56,26 @@
                 <a class="btn btn-primary btn-sm" href="{% url 'add_byproduct' %}">Add Byproduct</a>
             </li>
         </ul>
-        <ul class="list-group">
-            {% for raw_material in raw_materials %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>
-                        <strong>{{ raw_material.name }}</strong> 
-                        (Quantity: {{ raw_material.quantity }}, Quality: {{ raw_material.quality }})
-                    </span>
-                    <div>
-                        <a class="btn btn-primary btn-sm" href="{% url 'start_processing' raw_material.id %}">Start Processing</a>
-                        <a class="btn btn-danger btn-sm" href="{% url 'delete_raw_material' raw_material.id %}">Delete</a>
-                        <a href="{% url 'edit_raw_material' raw_material.id %}" class="btn btn-sm btn-warning">Edit</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-        
-        
+
+        {% if message %}
+        <div class="alert alert-info">{{ message }}</div>
+        {% else %}
+            <ul class="list-group">
+                {% for raw_material in raw_materials %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <strong>{{ raw_material.name }}</strong> 
+                            (Quantity: {{ raw_material.quantity }}, Quality: {{ raw_material.quality }})
+                        </span>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="{% url 'start_processing' raw_material.id %}">Start Processing</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'delete_raw_material' raw_material.id %}">Delete</a>
+                            <a href="{% url 'edit_raw_material' raw_material.id %}" class="btn btn-sm btn-warning">Edit</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 
     <!-- Conditionally render logout button if user is authenticated -->
