@@ -19,5 +19,6 @@ urlpatterns = [
     path('edit_raw_material/<int:raw_material_id>/', views.edit_raw_material, name='edit_raw_material'),
     path('edit_byproduct/<int:byproduct_id>/', views.edit_byproduct, name='edit_byproduct'),
     path('byproduct/<int:byproduct_id>/', views.byproduct_details, name='byproduct_details'),
+    path('reset-auto-increment/', views.reset_auto_increment, name='reset_auto_increment'),
 ]
  
