@@ -15,6 +15,8 @@ from django.db import transaction
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import HttpResponse
+from django.db import connection
 from django.contrib.auth import logout
 
 def homepage(request):
@@ -31,6 +33,19 @@ def homepage(request):
     
     return render(request, 'processing/homepage.html', {'raw_materials': raw_materials, 'message': message,})
 
+def reset_auto_increment(request):
+    # Delete all records
+    RawMaterial.objects.all().delete()
+    ByProduct.objects.all().delete()
+    Processing.objects.all().delete()
+    
+    # Reset AUTO_INCREMENT counters using raw SQL
+    with connection.cursor() as cursor:
+        cursor.execute("ALTER TABLE processing_rawmaterial AUTO_INCREMENT = 1;")
+        cursor.execute("ALTER TABLE processing_byproduct AUTO_INCREMENT = 1;")
+        cursor.execute("ALTER TABLE processing_processing AUTO_INCREMENT = 1;")
+
+    return HttpResponse("Auto-increment reset completed.")
 
 def login_view(request):
     if request.user.is_authenticated:
