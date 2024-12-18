@@ -56,6 +56,18 @@
         button:hover {
             background-color: #218838;
         }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-link a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s;
+        }
+        .back-link a:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +122,10 @@
 
         <!-- Submit Button -->
         <button type="submit">Add Byproduct</button>
+
+        <div class="back-link">
+            <a href="{% url 'homepage' %}">Back to Homepage</a>
+        </div>
     </form>
 </body>
 </html>
